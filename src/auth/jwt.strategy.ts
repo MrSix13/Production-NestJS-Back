@@ -8,6 +8,7 @@ import { AuthService } from "./auth.service";
 
 export interface JwtPayload {
   sub: string;
+  name: string;
   email: string;
   rol: string;
   phoneNumber?: number;

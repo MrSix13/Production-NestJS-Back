@@ -35,32 +35,29 @@ export class AuthService {
     const { email, password } = loginDTO;
     try {
       const loginUser = await this.usersService.findOne(email);
-      console.log("loginuser", loginUser);
       const passwordMatches = await bcrypt.compare(
         password,
         loginUser.password
       );
-      console.log("passwordMatched", passwordMatches);
 
       if (loginUser && passwordMatches) {
-        console.log("if");
         const payload: JwtPayload = {
           sub: loginUser.email,
+          name: loginUser.name,
           email: loginUser.email,
           rol: loginUser.rol,
           phoneNumber: loginUser.phoneNumber,
         };
-        console.log("payload", payload);
         try {
           const token = await this.jwtService.signAsync({
             sub: payload.email,
+            name: payload.name,
+            phone: payload.phoneNumber,
             email: payload.email,
             rol: payload.rol,
           });
-          console.log("generating token...");
           return { access_token: token };
         } catch (error) {
-          console.log("error generating token:", error);
           throw new InternalServerErrorException();
         }
       } else {
