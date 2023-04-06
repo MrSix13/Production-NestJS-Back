@@ -6,6 +6,10 @@ import { LoginDTO } from "src/users/dto/login.dto";
 import { UsersService } from "../users/users.service";
 import { JwtPayload } from "./jwt.strategy";
 
+export interface Token {
+  access_token: string;
+}
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -23,7 +27,7 @@ export class AuthService {
     return user;
   }
 
-  async login(loginDTO: LoginDTO): Promise<{ access_token: string }> {
+  async login(loginDTO: LoginDTO): Promise<Token> {
     const { email, password } = loginDTO;
 
     try {
@@ -40,9 +44,10 @@ export class AuthService {
           sub: loginUser.email,
           email: loginUser.email,
           rol: loginUser.rol,
+          phoneNumber: loginUser.phoneNumber,
         };
 
-        const token = this.jwtService.sign({
+        const token = await this.jwtService.signAsync({
           sub: payload.email,
           email: payload.email,
           rol: payload.rol,
