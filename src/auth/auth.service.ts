@@ -51,16 +51,18 @@ export class AuthService {
           phoneNumber: loginUser.phoneNumber,
         };
         console.log("payload", payload);
-        console.log("generating token...");
-        const token = await this.jwtService.signAsync({
-          sub: payload.email,
-          email: payload.email,
-          rol: payload.rol,
-        });
-        console.log("token", token);
-        return {
-          access_token: token,
-        };
+        try {
+          const token = await this.jwtService.signAsync({
+            sub: payload.email,
+            email: payload.email,
+            rol: payload.rol,
+          });
+          console.log("generating token...");
+          return { access_token: token };
+        } catch (error) {
+          console.log("error generating token:", error);
+          throw new InternalServerErrorException();
+        }
       } else {
         throw new UnauthorizedException("Invalid Credentials");
       }
