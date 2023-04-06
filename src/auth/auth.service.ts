@@ -37,15 +37,17 @@ export class AuthService {
         password,
         loginUser.password
       );
-      console.log(passwordMatches);
+      console.log("passwordMatched", passwordMatches);
 
       if (loginUser && passwordMatches) {
+        console.log("if");
         const payload: JwtPayload = {
           sub: loginUser.email,
           email: loginUser.email,
           rol: loginUser.rol,
           phoneNumber: loginUser.phoneNumber,
         };
+        console.log("payload", payload);
 
         const token = await this.jwtService.signAsync({
           sub: payload.email,
