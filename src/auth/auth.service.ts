@@ -1,4 +1,8 @@
-import { Injectable, UnauthorizedException } from "@nestjs/common";
+import {
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
+} from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 
@@ -29,7 +33,6 @@ export class AuthService {
 
   async login(loginDTO: LoginDTO): Promise<Token> {
     const { email, password } = loginDTO;
-
     try {
       const loginUser = await this.usersService.findOne(email);
       console.log("loginuser", loginUser);
@@ -48,7 +51,7 @@ export class AuthService {
           phoneNumber: loginUser.phoneNumber,
         };
         console.log("payload", payload);
-
+        console.log("generating token...");
         const token = await this.jwtService.signAsync({
           sub: payload.email,
           email: payload.email,
@@ -61,8 +64,12 @@ export class AuthService {
       } else {
         throw new UnauthorizedException("Invalid Credentials");
       }
-    } catch (error) {
-      throw new UnauthorizedException("Server Error");
+    } catch (e) {
+      if (e instanceof UnauthorizedException) {
+        throw e;
+      } else {
+        throw new InternalServerErrorException("Server Error");
+      }
     }
   }
 }
