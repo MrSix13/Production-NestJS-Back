@@ -1,16 +1,16 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
+import { Injectable, UnauthorizedException } from "@nestjs/common";
+import { JwtService } from "@nestjs/jwt";
+import * as bcrypt from "bcrypt";
 
-import { LoginDTO } from 'src/users/dto/login.dto';
-import { UsersService } from '../users/users.service';
-import { JwtPayload } from './jwt.strategy';
+import { LoginDTO } from "src/users/dto/login.dto";
+import { UsersService } from "../users/users.service";
+import { JwtPayload } from "./jwt.strategy";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async validateUserById(userId: string): Promise<any> {
@@ -28,11 +28,12 @@ export class AuthService {
 
     try {
       const loginUser = await this.usersService.findOne(email);
-
+      console.log("loginuser", loginUser);
       const passwordMatches = await bcrypt.compare(
         password,
-        loginUser.password,
+        loginUser.password
       );
+      console.log(passwordMatches);
 
       if (loginUser && passwordMatches) {
         const payload: JwtPayload = {
@@ -46,15 +47,15 @@ export class AuthService {
           email: payload.email,
           rol: payload.rol,
         });
-
+        console.log("token", token);
         return {
           access_token: token,
         };
       } else {
-        throw new UnauthorizedException('Invalid Credentials');
+        throw new UnauthorizedException("Invalid Credentials");
       }
     } catch (error) {
-      throw new UnauthorizedException('Invalid Credentials');
+      throw new UnauthorizedException("Server Error");
     }
   }
 }
