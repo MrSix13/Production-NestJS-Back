@@ -4,16 +4,17 @@ import { AuthService } from "./auth.service";
 import { LoginDTO } from "../users/dto/login.dto";
 import { RegisterDTO } from "src/users/dto/register.dto";
 import { AuthGuard } from "@nestjs/passport";
+import { IToken } from "src/users/users.service";
 
 @Controller("auth")
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    private readonly userService: UsersService
+    private readonly userService: UsersService,
   ) {}
 
   @Post("register")
-  async register(@Body() registerDTO: RegisterDTO) {
+  async register(@Body() registerDTO: RegisterDTO): Promise<IToken> {
     return await this.userService.create(registerDTO);
   }
 

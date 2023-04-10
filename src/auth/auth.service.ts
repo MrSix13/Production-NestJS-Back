@@ -18,7 +18,7 @@ export interface Token {
 export class AuthService {
   constructor(
     private readonly usersService: UsersService,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   async validateUserById(userId: string): Promise<any> {
@@ -37,7 +37,7 @@ export class AuthService {
       const loginUser = await this.usersService.findOne(email);
       const passwordMatches = await bcrypt.compare(
         password,
-        loginUser.password
+        loginUser.password,
       );
 
       if (loginUser && passwordMatches) {

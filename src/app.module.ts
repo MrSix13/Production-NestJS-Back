@@ -10,6 +10,7 @@ import { TablesModule } from './tables/tables.module';
 import { MenusModule } from './menus/menus.module';
 import { OrdersModule } from './orders/orders.module';
 import { RestaurantsModule } from './restaurants/restaurants.module';
+import { PaymentGatewayModule } from './payment-gateway/payment-gateway.module';
 import * as cors from "cors";
 
 @Module({
@@ -25,6 +26,7 @@ import * as cors from "cors";
     MenusModule,
     OrdersModule,
     RestaurantsModule,
+    PaymentGatewayModule,
   ],
   controllers: [AppController],
   providers: [AppService],
