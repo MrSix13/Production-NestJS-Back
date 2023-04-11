@@ -11,7 +11,6 @@ export interface JwtPayload {
   name: string;
   email: string;
   rol: string;
-  phoneNumber?: number;
   iat?: number;
   exp?: number;
 }

@@ -43,7 +43,6 @@ export class UsersService {
         name: createdUser.name,
         rol: "CLIENTE",
         email,
-        phoneNumber: createdUser.phoneNumber,
       };
 
       const signOption: JwtSignOptions = {

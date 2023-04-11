@@ -46,13 +46,11 @@ export class AuthService {
           name: loginUser.name,
           email: loginUser.email,
           rol: loginUser.rol,
-          phoneNumber: loginUser.phoneNumber,
         };
         try {
           const token = await this.jwtService.signAsync({
             sub: payload.email,
             name: payload.name,
-            phone: payload.phoneNumber,
             email: payload.email,
             rol: payload.rol,
           });
