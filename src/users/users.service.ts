@@ -57,6 +57,7 @@ export class UsersService {
       console.log("token", "retornar token");
       return { access_token: token };
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException("Error Creating User");
     }
   }
