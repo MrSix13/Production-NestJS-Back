@@ -4,5 +4,4 @@ export const userStub: RegisterDTO = {
   name: "abas",
   email: "test@test.cl",
   password: "asdasdsa",
-  phoneNumber: 12231,
 };
