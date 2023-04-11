@@ -49,9 +49,11 @@ export class UsersService {
         expiresIn: 8493,
         secret: process.env.JWT_SECRET,
       };
-
       const token = this.jwtService.sign(payload, signOption);
+      console.log("token", token);
+      console.log("createdUser", createdUser);
       await createdUser.save();
+      console.log("token", "retornar token");
       return { access_token: token };
     } catch (error) {
       throw new InternalServerErrorException("Error Creating User");
