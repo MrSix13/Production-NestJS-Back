@@ -52,6 +52,7 @@ export class UsersService {
       const token = this.jwtService.sign(payload, signOption);
       console.log("token", token);
       console.log("createdUser", createdUser);
+      await createdUser.validate();
       await createdUser.save();
       console.log("token", "retornar token");
       return { access_token: token };
