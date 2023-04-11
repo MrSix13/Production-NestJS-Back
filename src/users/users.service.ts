@@ -38,7 +38,6 @@ export class UsersService {
 
     try {
       const createdUser = new this._usersModel(registerDTO);
-
       const payload: JwtPayload = {
         sub: email,
         name: createdUser.name,
@@ -53,12 +52,10 @@ export class UsersService {
       };
 
       const token = this.jwtService.sign(payload, signOption);
+      await createdUser.save();
       return { access_token: token };
     } catch (error) {
       throw new InternalServerErrorException("Error Creating User");
     }
-
-    // const createdUser = new this._usersModel(registerDTO);
-    // return createdUser.save();
   }
 }
