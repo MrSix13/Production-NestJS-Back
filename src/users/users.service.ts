@@ -9,6 +9,7 @@ import { Users, UsersDocument } from "./schema/users.schema";
 import { RegisterDTO } from "./dto/register.dto";
 import { JwtPayload } from "src/auth/jwt.strategy";
 import { JwtService, JwtSignOptions } from "@nestjs/jwt";
+import * as bcrypt from "bcrypt";
 
 export interface IToken {
   access_token: string;
@@ -35,9 +36,12 @@ export class UsersService {
     if (existingUser) {
       throw new ConflictException("Email is alreay Exist");
     }
-
+    const hashPassword = await bcrypt.hash(registerDTO.password, 10);
     try {
-      const createdUser = new this._usersModel(registerDTO);
+      const createdUser = new this._usersModel({
+        ...registerDTO,
+        password: hashPassword,
+      });
       const payload: JwtPayload = {
         sub: email,
         name: createdUser.name,
