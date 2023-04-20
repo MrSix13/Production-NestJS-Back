@@ -24,10 +24,4 @@ export class AuthController {
     const a = await this.authService.login(loginDTO);
     return a;
   }
-
-  @UseGuards(AuthGuard("jwt"))
-  @Post("Protected")
-  async protectedRoute(@Req() req) {
-    return req.user;
-  }
 }
