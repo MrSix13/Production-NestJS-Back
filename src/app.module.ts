@@ -6,12 +6,12 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { UsersModule } from "./users/users.module";
 import { AuthModule } from "./auth/auth.module";
-import { TablesModule } from './tables/tables.module';
-import { MenusModule } from './menus/menus.module';
-import { OrdersModule } from './orders/orders.module';
-import { RestaurantsModule } from './restaurants/restaurants.module';
-import { PaymentGatewayModule } from './payment-gateway/payment-gateway.module';
-import * as cors from "cors";
+import { TablesModule } from "./tables/tables.module";
+import { MenusModule } from "./menus/menus.module";
+import { OrdersModule } from "./orders/orders.module";
+import { RestaurantsModule } from "./restaurants/restaurants.module";
+import { PaymentGatewayModule } from "./payment-gateway/payment-gateway.module";
+import cors from "cors";
 
 @Module({
   imports: [
