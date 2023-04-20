@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { Module, RequestMethod } from "@nestjs/common";
 import { MiddlewareConsumer } from "@nestjs/common/interfaces";
 import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
@@ -11,7 +11,7 @@ import { MenusModule } from "./menus/menus.module";
 import { OrdersModule } from "./orders/orders.module";
 import { RestaurantsModule } from "./restaurants/restaurants.module";
 import { PaymentGatewayModule } from "./payment-gateway/payment-gateway.module";
-import * as cors from "cors";
+import * as express from "express";
 
 @Module({
   imports: [
@@ -33,6 +33,19 @@ import * as cors from "cors";
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(cors()).forRoutes("*");
+    consumer
+      .apply(express.json(), express.urlencoded({ extended: true }))
+      .forRoutes({ path: "*", method: RequestMethod.ALL });
+    consumer
+      .apply((req, res, next) => {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+        res.setHeader(
+          "Access-Control-Allow-Headers",
+          "Content-Type, Authorization",
+        );
+        next();
+      })
+      .forRoutes({ path: "*", method: RequestMethod.ALL });
   }
 }
