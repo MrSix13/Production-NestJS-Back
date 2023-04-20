@@ -11,7 +11,7 @@ import { MenusModule } from "./menus/menus.module";
 import { OrdersModule } from "./orders/orders.module";
 import { RestaurantsModule } from "./restaurants/restaurants.module";
 import { PaymentGatewayModule } from "./payment-gateway/payment-gateway.module";
-import cors from "cors";
+import * as cors from "cors";
 
 @Module({
   imports: [
