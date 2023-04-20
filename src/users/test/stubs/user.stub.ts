@@ -1,4 +1,4 @@
-import { RegisterDTO } from "src/users/dto/register.dto";
+import { RegisterDTO } from "../../dto/register.dto";
 
 export const userStub: RegisterDTO = {
   name: "abas",
